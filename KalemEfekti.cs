@@ -6,38 +6,38 @@ public class KalemEfekti : ICommand
 {
     public void Execute()
     {
-        // Aktif proje ve zaman çizelgesi alınır
+        // Aktif proje ve zaman Ã§izelgesi alÄ±nÄ±r
         Project proj = Vegas.Project;
         Timecode projLength = proj.Length;
 
-        // Seçili klipler alınır
+        // SeÃ§ili klipler alÄ±nÄ±r
         TrackEvent ev = Vegas.Project.GetSelectedEvent();
         VideoEvent vidEvent = ev as VideoEvent;
 
-        // Klipler üzerinde işlemler yapılır
+        // Klipler Ã¼zerinde iÅŸlemler yapÄ±lÄ±r
         if (vidEvent != null)
         {
-            // Kalem efekti için yeni bir video efekti oluşturulur
+            // Kalem efekti iÃ§in yeni bir video efekti oluÅŸturulur
             VideoFX kalemEfekti = new VideoFX("Kalem Efekti");
 
-            // Kalem efektinin parametreleri ayarlanır
+            // Kalem efektinin parametreleri ayarlanÄ±r
             kalemEfekti.Parameters["Thickness"].Value = 2;
             kalemEfekti.Parameters["Color"].Value = Color.Red;
 
-            // Görüntü boyutları alınır
+            // GÃ¶rÃ¼ntÃ¼ boyutlarÄ± alÄ±nÄ±r
             int width = vidEvent.Video.Width;
             int height = vidEvent.Video.Height;
 
-            // Çizim işlemi için bir Bitmap nesnesi oluşturulur
+            // Ã‡izim iÅŸlemi iÃ§in bir Bitmap nesnesi oluÅŸturulur
             System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(width, height);
 
-            // Bitmap nesnesi Graphics sınıfına dönüştürülür
+            // Bitmap nesnesi Graphics sÄ±nÄ±fÄ±na dÃ¶nÃ¼ÅŸtÃ¼rÃ¼lÃ¼r
             System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(bitmap);
 
-            // Çizim rengi ayarlanır
+            // Ã‡izim rengi ayarlanÄ±r
             System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.Red, 2);
 
-            // Yukarıdan aşağı doğru bir çizim işlemi gerçekleştirilir
+            // YukarÄ±dan aÅŸaÄŸÄ± doÄŸru bir Ã§izim iÅŸlemi gerÃ§ekleÅŸtirilir
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
@@ -55,15 +55,15 @@ public class KalemEfekti : ICommand
                 }
             }
 
-            // Bitmap nesnesi video stream'e dönüştürülür
+            // Bitmap nesnesi video stream'e dÃ¶nÃ¼ÅŸtÃ¼rÃ¼lÃ¼r
             VideoStream stream = new VideoStream(bitmap);
 
-            // Efekt klibe uygulanır
+            // Efekt klibe uygulanÄ±r
             vidEvent.VideoFX.AddEffect(kalemEfekti);
             vidEvent.VideoMedia.SetStream(stream);
         }
 
-        // Script tamamlandı
-        Vegas.ShowMessage("Kalem efekti başarıyla eklendi.");
+        // Script tamamlandÄ±
+        Vegas.ShowMessage("Kalem efekti baÅŸarÄ±yla eklendi.");
     }
 }
